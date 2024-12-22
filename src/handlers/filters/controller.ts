@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent} from 'aws-lambda';
-import { createFilerInUserRecord, deleteFilterUserRecord } from './service';
+import {createFilerInUserRecord, deleteFilterUserRecord, listFilersInUserRecord} from './service';
 import { DatabaseError } from '../../utils/errors';
 import { getOrCreateTraceId } from '../../utils/tracing';
 import { logger } from '../../utils/logger';
@@ -14,12 +14,58 @@ const createHeaders = (traceId: string) => ({
     'X-Trace-Id': traceId
 });
 
+// id?: string; // Added ID field
+// userId: string;
+// timeFilter: string | null;
+// domainFilter: string | null;
+// showLiked: boolean;
+// searchQuery: string;
+// name: string;
+// createdAt: number;
+// hasNotification: boolean;
+
 const filterSchema = z.object({
+    userId: z.string(),
+    id: z.string().optional(),
     timeFilter: z.string().nullable(),
     domainFilter: z.string().nullable(),
     showLiked: z.boolean(),
-    searchQuery: z.string()
+    searchQuery: z.string(),
+    createdAt: z.number().optional().default(Date.now()),
+    hasNotification: z.boolean().optional().default(false),
+    name: z.string(),
 });
+
+export const listFilersInUserRecordHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    const traceId = getOrCreateTraceId(event);
+    const headers = createHeaders(traceId);
+
+    try {
+        const userId = event.pathParameters?.userId;
+        if (!userId) {
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({ error: 'User ID is required' })
+            };
+        }
+
+        const user = await listFilersInUserRecord(userId);
+
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify(user)
+        };
+    } catch (error) {
+        logger.error('Failed to create filter', error as Error);
+        return {
+            statusCode: error instanceof DatabaseError ? 400 : 500,
+            headers,
+            body: JSON.stringify({ error: (error as Error).message })
+        };
+    }
+};
 
 export const createFilerInUserRecordHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const traceId = getOrCreateTraceId(event);

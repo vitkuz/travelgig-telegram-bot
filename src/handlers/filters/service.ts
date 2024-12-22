@@ -4,13 +4,27 @@ import { config } from '../../config';
 import { DatabaseError } from '../../utils/errors';
 import { SearchFilters } from "../../types/user.types";
 import { randomUUID } from 'crypto';
+import {UserProfile} from "../auth/types";
 
 const docClient = createDynamoDBClient();
 
-export async function createFilerInUserRecord(userId: string, filter: Omit<SearchFilters, 'id'>): Promise<void> {
+export async function listFilersInUserRecord(userId: string): Promise<UserProfile> {
+    try {
+        const response = await docClient.send(new GetCommand({
+            TableName: config.tables.users,
+            Key: { userId },
+        }));
+
+        return response.Item as UserProfile;
+    } catch (error) {
+        throw new DatabaseError('Failed to list user filters');
+    }
+}
+
+export async function createFilerInUserRecord(userId: string, filter: SearchFilters): Promise<void> {
     const filterWithId = {
         ...filter,
-        id: randomUUID()
+        id: filter.id || randomUUID()
     };
 
     try {

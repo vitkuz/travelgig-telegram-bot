@@ -4,6 +4,7 @@ export interface UserProfile {
     lastName?: string;
     balance: number;
     createdAt: string;
+    filters: any[];
 }
 export interface AuthLinkParams {
     userId: string;

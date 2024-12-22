@@ -18,13 +18,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile> {
             throw new DatabaseError('User not found');
         }
 
-        return {
-            userId: response.Item.userId,
-            firstName: response.Item.firstName,
-            lastName: response.Item.lastName,
-            balance: response.Item.balance || 0,
-            createdAt: response.Item.createdAt
-        };
+        return response.Item as UserProfile;
     } catch (error) {
         logger.error('Failed to fetch user profile', error as Error);
         throw error;

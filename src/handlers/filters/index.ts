@@ -1,5 +1,9 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { createFilerInUserRecordHandler, deleteFilterUserRecordHandler } from './controller';
+import {
+    createFilerInUserRecordHandler,
+    deleteFilterUserRecordHandler,
+    listFilersInUserRecordHandler
+} from './controller';
 import { logger } from '../../utils/logger';
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -10,6 +14,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     });
 
     switch (event.httpMethod) {
+        case 'GET':
+            // create or update user attribute filters, array of objects
+            return listFilersInUserRecordHandler(event);
         case 'POST':
             // create or update user attribute filters, array of objects
             return createFilerInUserRecordHandler(event);

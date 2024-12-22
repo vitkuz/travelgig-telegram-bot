@@ -169,8 +169,7 @@ export class TelegramBotStack extends cdk.Stack {
     const filter = filters.addResource('{filterId}');
 
     filters.addMethod('POST', new apigateway.LambdaIntegration(filtersHandler)); // add new filter
-    // filter.addMethod('GET', new apigateway.LambdaIntegration(filtersHandler));
-    // filter.addMethod('PUT', new apigateway.LambdaIntegration(filtersHandler));
+    filters.addMethod('GET', new apigateway.LambdaIntegration(filtersHandler)); // list all users filters
     filter.addMethod('DELETE', new apigateway.LambdaIntegration(filtersHandler));
 
     // Stack Outputs
