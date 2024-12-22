@@ -30,3 +30,19 @@ Content-Type: application/json
 
 ### Delete a user (DELETE)
 DELETE https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/users/1234
+
+
+### Add filter to user
+POST https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/users/1234/filters
+Content-Type: application/json
+
+{
+    "timeFilter": "last_week",
+    "domainFilter": "example.com",
+    "showLiked": true,
+    "searchQuery": "test"
+}
+
+### Delete filter from muser
+DELETE https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/users/1234/filters/7d71f5df-f2ac-4d53-ad58-471014fdba6b
+Content-Type: application/json
