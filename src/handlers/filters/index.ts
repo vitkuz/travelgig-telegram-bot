@@ -11,8 +11,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     switch (event.httpMethod) {
         case 'POST':
+            // create or update user attribute filters, array of objects
             return createFilerInUserRecordHandler(event);
         case 'DELETE':
+            // delete or update user attribute filters, array of objects
             return deleteFilterUserRecordHandler(event);
         default:
             return {

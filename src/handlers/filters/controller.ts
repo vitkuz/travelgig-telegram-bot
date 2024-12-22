@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent} from 'aws-lambda';
-import {createFilerInUser, deleteFilterUserRecord} from './service';
+import {createFilerInUserRecord, deleteFilterUserRecord} from './service';
 import { DatabaseError } from '../../utils/errors';
 import { getOrCreateTraceId } from '../../utils/tracing';
 import { logger } from '../../utils/logger';
@@ -21,7 +21,7 @@ export const createFilerInUserRecordHandler = async (event:APIGatewayProxyEvent)
     try {
         const body = JSON.parse(event.body || '{}');
         const data = createUserSchema.parse(body);
-        const user = await createFilerInUser(data);
+        const user = await createFilerInUserRecord(data);
 
         return {
             statusCode: 201,
