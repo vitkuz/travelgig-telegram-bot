@@ -1,5 +1,5 @@
-import {APIGatewayProxyHandler, APIGatewayProxyResult, APIGatewayProxyEvent} from 'aws-lambda';
-import { createUser, getUser, updateUser, deleteUser } from './service';
+import { APIGatewayProxyResult, APIGatewayProxyEvent} from 'aws-lambda';
+import {createFilerInUser, deleteFilterUserRecord} from './service';
 import { DatabaseError } from '../../utils/errors';
 import { getOrCreateTraceId } from '../../utils/tracing';
 import { logger } from '../../utils/logger';
@@ -14,14 +14,14 @@ const createHeaders = (traceId: string) => ({
     'X-Trace-Id': traceId
 });
 
-export const createUserHandler = async (event:APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const createFilerInUserRecordHandler = async (event:APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const traceId = getOrCreateTraceId(event);
     const headers = createHeaders(traceId);
 
     try {
         const body = JSON.parse(event.body || '{}');
         const data = createUserSchema.parse(body);
-        const user = await createUser(data);
+        const user = await createFilerInUser(data);
 
         return {
             statusCode: 201,
@@ -39,86 +39,22 @@ export const createUserHandler = async (event:APIGatewayProxyEvent): Promise<API
     }
 };
 
-export const getUserHandler = async (event:APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const deleteFilterUserRecordHandler = async (event:APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const traceId = getOrCreateTraceId(event);
     const headers = createHeaders(traceId);
 
     try {
         const userId = event.pathParameters?.userId;
-        if (!userId) {
+        const filterId = event.pathParameters?.filterId;
+        if (!userId || !filterId) {
             return {
                 statusCode: 400,
                 headers,
-                body: JSON.stringify({ error: 'User ID is required' })
+                body: JSON.stringify({ error: 'User ID is required. Filter ID is required' })
             };
         }
 
-        const user = await getUser(userId);
-        return {
-            statusCode: 200,
-            headers,
-            body: JSON.stringify(user)
-        };
-    } catch (error) {
-        logger.error('Failed to get user', error as Error);
-        return {
-            statusCode: error instanceof DatabaseError ? 404 : 500,
-            headers,
-            // @ts-ignore
-            body: JSON.stringify({ error: error.message })
-        };
-    }
-};
-
-export const updateUserHandler = async (event:APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const traceId = getOrCreateTraceId(event);
-    const headers = createHeaders(traceId);
-
-    try {
-        const userId = event.pathParameters?.userId;
-        if (!userId) {
-            return {
-                statusCode: 400,
-                headers,
-                body: JSON.stringify({ error: 'User ID is required' })
-            };
-        }
-
-        const body = JSON.parse(event.body || '{}');
-        const data = updateUserSchema.parse(body);
-        const user = await updateUser(userId, data);
-
-        return {
-            statusCode: 200,
-            headers,
-            body: JSON.stringify(user)
-        };
-    } catch (error) {
-        logger.error('Failed to update user', error as Error);
-        return {
-            statusCode: error instanceof DatabaseError ? 404 : 500,
-            headers,
-            // @ts-ignore
-            body: JSON.stringify({ error: error.message })
-        };
-    }
-};
-
-export const deleteUserHandler = async (event:APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const traceId = getOrCreateTraceId(event);
-    const headers = createHeaders(traceId);
-
-    try {
-        const userId = event.pathParameters?.userId;
-        if (!userId) {
-            return {
-                statusCode: 400,
-                headers,
-                body: JSON.stringify({ error: 'User ID is required' })
-            };
-        }
-
-        await deleteUser(userId);
+        await deleteFilterUserRecord(userId);
         return {
             statusCode: 204,
             headers,

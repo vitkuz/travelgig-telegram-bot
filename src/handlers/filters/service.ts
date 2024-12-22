@@ -3,10 +3,11 @@ import { createDynamoDBClient } from '../../config/dynamodb';
 import { config } from '../../config';
 import { DatabaseError } from '../../utils/errors';
 import {CreateUserDto, UpdateUserDto, User} from "../../types/user.types";
+import {deleteFilterUserRecordHandler} from "./controller";
 
 const docClient = createDynamoDBClient();
 
-export async function createUser(data: CreateUserDto): Promise<User> {
+export async function createFilerInUser(data: CreateUserDto): Promise<User> {
     const user = {
         ...data,
         balance: 0,
@@ -71,7 +72,7 @@ export async function updateUser(userId: string, data: UpdateUserDto): Promise<U
     }
 }
 
-export async function deleteUser(userId: string): Promise<void> {
+export async function deleteFilterUserRecord(userId: string): Promise<void> {
     try {
         await docClient.send(new DeleteCommand({
             TableName: config.tables.users,

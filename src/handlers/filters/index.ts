@@ -1,5 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { createUserHandler, getUserHandler, updateUserHandler, deleteUserHandler } from './controller';
+import { createFilerInUserRecordHandler, deleteFilterUserRecordHandler } from './controller';
 import { logger } from '../../utils/logger';
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -11,13 +11,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     switch (event.httpMethod) {
         case 'POST':
-            return createUserHandler(event);
-        case 'GET':
-            return getUserHandler(event);
-        case 'PUT':
-            return updateUserHandler(event);
+            return createFilerInUserRecordHandler(event);
         case 'DELETE':
-            return deleteUserHandler(event);
+            return deleteFilterUserRecordHandler(event);
         default:
             return {
                 statusCode: 405,
