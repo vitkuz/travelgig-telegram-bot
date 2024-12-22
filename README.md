@@ -5,6 +5,9 @@ TelegramBotStack.TelegramBotApiOutput = https://qp7d64ncw4.execute-api.us-east-1
 TelegramBotStack.UsersAuthTableOutput = TelegramBotStack-UsersAuthTable55A029FE-WOB85XCHCIVZ
 TelegramBotStack.UsersTableOutput = TelegramBotStack-UsersTable9725E9C8-14OV16L88H2EE
 
+@vitkuz_payment_bot
+
+https://t.me/vitkuz_payment_bot
 
 # Telegram Payment Bot
 

@@ -1,0 +1,32 @@
+### Create a new user (POST)
+POST https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/users
+Content-Type: application/json
+
+{
+  "userId": "1234",
+  "balance": 1000,
+  "createdAt": "2024-12-20T12:34:56Z",
+  "firstName": "John",
+  "languageCode": "en",
+  "lastName": "Doe",
+  "username": "johndoe"
+}
+
+### Get a user (GET)
+GET https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/users/1234
+
+### Update a user (PUT)
+
+PUT https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/users/1234
+Content-Type: application/json
+
+{
+  "balance": 2000,
+  "firstName": "Johnny",
+  "languageCode": "en-US",
+  "lastName": "Doe",
+  "username": "johnnydoe"
+}
+
+### Delete a user (DELETE)
+DELETE https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/users/1234

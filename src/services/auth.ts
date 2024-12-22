@@ -11,7 +11,9 @@ export async function generateAuthLink(userId: string) {
   logger.debug('Recording auth token', { userId, ttl });
   await recordAuthToken(userId, secret, ttl);
 
-  const authLink = `https://yourwebsite.com/login?userId=${userId}&secret=${secret}`;
+  const domain = process.env.FRONT_URL || 'https://d1vcyqhvw55pzm.cloudfront.net/'
+
+  const authLink = `${domain}?userId=${userId}&secret=${secret}`;
   logger.debug('Auth link generated', { userId });
 
   return authLink;

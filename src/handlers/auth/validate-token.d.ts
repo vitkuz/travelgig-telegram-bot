@@ -1,1 +1,1 @@
-export declare function validateAuthToken(userId: string, secret: string): Promise<boolean>;
+export declare function validateAuthToken(userId: string, secretSent: string): Promise<boolean>;

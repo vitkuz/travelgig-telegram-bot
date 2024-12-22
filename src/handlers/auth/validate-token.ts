@@ -6,7 +6,7 @@ import { logger } from '../../utils/logger';
 
 const docClient = createDynamoDBClient();
 
-export async function validateAuthToken(userId: string, secret: string): Promise<boolean> {
+export async function validateAuthToken(userId: string, secretSent: string): Promise<boolean> {
     try {
         const response = await docClient.send(new GetCommand({
             TableName: config.tables.usersAuth,
@@ -17,14 +17,12 @@ export async function validateAuthToken(userId: string, secret: string): Promise
             throw new AuthError('Invalid authentication token');
         }
 
-        const { token } = response.Item;
-        // const now = Math.floor(Date.now() / 1000);
-        //
-        // if (ttl < now) {
-        //     throw new AuthError('Authentication token expired');
-        // }
+        const { secret: secretSaved } = response.Item;
 
-        return token === secret;
+        console.log({secretSent});
+        console.log({secretSaved});
+
+        return secretSent === secretSaved;
     } catch (error) {
         logger.error('Failed to validate auth token', error as Error);
         throw error;

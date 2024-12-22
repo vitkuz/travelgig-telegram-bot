@@ -3,3 +3,9 @@ GET https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/auth/validate?us
 
 ### Test with second userId/secret
 GET https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/auth/validate?userId=210932263&secret=0464c78d793df005a40d93ada154b6a596ac8eb2f96d07c63ecb4b644bb7006d
+
+### Test with userId
+GET https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/auth/validate?userId=11111111&secret=0464c78d793df005a40d93ada154b6a596ac8eb2f96d07c63ecb4b644bb7006d
+
+### Test with second userId/secret
+GET https://ipgz7wpkd3.execute-api.us-east-1.amazonaws.com/prod/auth/validate?userId=210932263&secret=123123123
