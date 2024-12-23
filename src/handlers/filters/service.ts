@@ -81,3 +81,43 @@ export async function deleteFilterUserRecord(userId: string, filterId: string): 
         throw new DatabaseError(error instanceof DatabaseError ? error.message : 'Failed to delete filter');
     }
 }
+
+export async function toggleFilterNotification(userId: string, filterId: string): Promise<void> {
+    try {
+        // First, get the current filters
+        const response = await docClient.send(new GetCommand({
+            TableName: config.tables.users,
+            Key: { userId }
+        }));
+
+        if (!response.Item?.filters) {
+            throw new DatabaseError('No filters found for user');
+        }
+
+        const currentFilters = response.Item.filters as SearchFilters[];
+        const filterIndex = currentFilters.findIndex(filter => filter.id === filterId);
+
+        if (filterIndex === -1) {
+            throw new DatabaseError('Filter not found');
+        }
+
+        // Toggle the hasNotification value
+        const updatedFilters = [...currentFilters];
+        updatedFilters[filterIndex] = {
+            ...updatedFilters[filterIndex],
+            hasNotification: !updatedFilters[filterIndex].hasNotification
+        };
+
+        await docClient.send(new UpdateCommand({
+            TableName: config.tables.users,
+            Key: { userId },
+            UpdateExpression: 'SET filters = :filters',
+            ExpressionAttributeValues: {
+                ':filters': updatedFilters
+            },
+            ReturnValues: 'UPDATED_NEW'
+        }));
+    } catch (error) {
+        throw new DatabaseError(error instanceof DatabaseError ? error.message : 'Failed to toggle filter notification');
+    }
+}

@@ -2,7 +2,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import {
     createFilerInUserRecordHandler,
     deleteFilterUserRecordHandler,
-    listFilersInUserRecordHandler
+    listFilersInUserRecordHandler, toggleFilterNotificationHandler
 } from './controller';
 import { logger } from '../../utils/logger';
 
@@ -23,6 +23,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         case 'DELETE':
             // delete or update user attribute filters, array of objects
             return deleteFilterUserRecordHandler(event);
+        case 'PUT':
+            return toggleFilterNotificationHandler(event);
         default:
             return {
                 statusCode: 405,

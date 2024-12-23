@@ -1,5 +1,10 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent} from 'aws-lambda';
-import {createFilerInUserRecord, deleteFilterUserRecord, listFilersInUserRecord} from './service';
+import {
+    createFilerInUserRecord,
+    deleteFilterUserRecord,
+    listFilersInUserRecord,
+    toggleFilterNotification
+} from './service';
 import { DatabaseError } from '../../utils/errors';
 import { getOrCreateTraceId } from '../../utils/tracing';
 import { logger } from '../../utils/logger';
@@ -125,6 +130,38 @@ export const deleteFilterUserRecordHandler = async (event: APIGatewayProxyEvent)
         };
     } catch (error) {
         logger.error('Failed to delete filter', error as Error);
+        return {
+            statusCode: error instanceof DatabaseError ? 404 : 500,
+            headers,
+            body: JSON.stringify({ error: (error as Error).message })
+        };
+    }
+};
+
+export const toggleFilterNotificationHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    const traceId = getOrCreateTraceId(event);
+    const headers = createHeaders(traceId);
+
+    try {
+        const userId = event.pathParameters?.userId;
+        const filterId = event.pathParameters?.filterId;
+
+        if (!userId || !filterId) {
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({ error: 'User ID and Filter ID are required' })
+            };
+        }
+
+        await toggleFilterNotification(userId, filterId);
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({ message: 'Filter notification toggled successfully' })
+        };
+    } catch (error) {
+        logger.error('Failed to toggle filter notification', error as Error);
         return {
             statusCode: error instanceof DatabaseError ? 404 : 500,
             headers,
