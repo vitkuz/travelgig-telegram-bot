@@ -15,19 +15,46 @@ export const handler = async (event: any) => {
       const text = body.message.text;
       const user = body.message.from;
 
-      switch (text) {
-        case '/start':
-          await handleStart(bot, chatId, user);
-          break;
-        case '/login':
-          await handleLogin(bot, chatId, user.id.toString());
-          break;
-        case '/payment':
-          await handlePayment(bot, chatId);
-          break;
-        case '/mybalance':
-          await handleBalance(bot, chatId, user.id.toString());
-          break;
+      console.log({
+        chatId,
+        text,
+        user,
+      });
+
+      // Check if the text starts with a slash
+      if (text.startsWith('/')) {
+        const [command, payload] = text.split(' ', 2); // Split into command and optional payload
+        console.log({ command, payload });
+
+        switch (command) {
+          case '/start':
+            if (payload === 'login') {
+              await handleLogin(bot, chatId, user.id.toString());
+            } else {
+              await handleStart(bot, chatId, user);
+            }
+            break;
+
+          case '/login':
+            await handleLogin(bot, chatId, user.id.toString());
+            break;
+
+          case '/payment':
+            await handlePayment(bot, chatId);
+            break;
+
+          case '/mybalance':
+            await handleBalance(bot, chatId, user.id.toString());
+            break;
+
+          default:
+            // Handle unknown commands
+            await bot.sendMessage(chatId, `Unknown command: ${command}`);
+            break;
+        }
+      } else {
+        // Default handler for non-command text
+        await bot.sendMessage(chatId, 'Sorry, I don’t understand that message.');
       }
     } else if (body.pre_checkout_query) {
       await bot.answerPreCheckoutQuery(body.pre_checkout_query.id, true);
