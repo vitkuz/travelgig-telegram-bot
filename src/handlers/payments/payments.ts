@@ -2,11 +2,12 @@ import TelegramBot from 'node-telegram-bot-api';
 import {logger} from "../../utils/logger";
 import {PaymentError} from "../../utils/errors";
 import {config} from "../../config/index";
+import { t } from '../../i18n/translate';
 
 export async function createPaymentInvoice(bot: TelegramBot, chatId: number) {
     try {
-        const title = 'Пополнить баланс';
-        const description = 'Добавить звезд на баланс';
+        const title = t('payment.title', 'ru');
+        const description = t('payment.description', 'ru');
         const payload = `payment_${Date.now()}`;
         const currency = 'XTR';
         const prices = [{ label: 'Баланс', amount: 1 }]; // 1 star

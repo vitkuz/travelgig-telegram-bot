@@ -3,6 +3,7 @@ import { PaymentSuccess, PaymentDetails } from './types';
 import { processPayment } from './process-payment';
 import { logger } from '../../utils/logger';
 import { DatabaseError } from '../../utils/errors';
+import { t } from '../../i18n/translate';
 
 export async function handleSuccessfulPayment(
     bot: TelegramBot,
@@ -16,13 +17,13 @@ export async function handleSuccessfulPayment(
         logger.info('Sending success message', { chatId, userId });
         await bot.sendMessage(
             chatId,
-            `✅ Payment successful! Added $${amount} to your balance.`
+            t('payment.success', 'ru', { amount })
         );
     } catch (error) {
         if (error instanceof DatabaseError) {
             await bot.sendMessage(
                 chatId,
-                '❌ Payment received but failed to update balance. Our team will resolve this issue.'
+                t('payment.updateError', 'ru')
             );
         }
         throw error; // Re-throw for logging/monitoring

@@ -30,22 +30,22 @@ export const handler = async (event: any) => {
         switch (command) {
           case '/start':
             if (payload === 'login') {
-              await handleLogin(bot, chatId, user.id.toString());
+              await handleLogin(bot, chatId, user);
             } else {
               await handleStart(bot, chatId, user);
             }
             break;
 
           case '/login':
-            await handleLogin(bot, chatId, user.id.toString());
+            await handleLogin(bot, chatId, user);
             break;
 
           case '/payment':
-            await handlePayment(bot, chatId);
+            await handlePayment(bot, chatId, user);
             break;
 
           case '/mybalance':
-            await handleBalance(bot, chatId, user.id.toString());
+            await handleBalance(bot, chatId, user);
             break;
 
           default:

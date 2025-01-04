@@ -4,7 +4,8 @@ import { recordUser } from '../services/dynamodb';
 import { generateAuthLink } from '../services/auth';
 import { logger } from '../utils/logger';
 import { PaymentError } from '../utils/errors';
-import {createPaymentInvoice} from "./payments/payments";
+import { createPaymentInvoice } from "./payments/payments";
+import { t } from '../i18n/translate';
 // import { Message } from 'node-telegram-bot-api';
 
 export async function handleStart(bot: TelegramBot, chatId: number, user: TelegramUser) {
@@ -13,6 +14,7 @@ export async function handleStart(bot: TelegramBot, chatId: number, user: Telegr
     languageCode: user.language_code
   });
 
+  const lang = user.language_code || 'ru';
   await recordUser(user);
 
   logger.debug('Sending welcome message', { chatId, userId: user.id });
@@ -20,20 +22,20 @@ export async function handleStart(bot: TelegramBot, chatId: number, user: Telegr
       chatId,
       'https://videos-582347504313.s3.amazonaws.com/bb3c5120-c598-448f-912a-eb0502517df9.jfif',
       {
-        caption: `${user.first_name},\n\n💰Хочешь работать за границей? Ты в правильном месте! Есть уникальная возможность трудоустройства по всему миру! \n\n🌏 Этот бот позволит тебе увидеть список актуальных вакансий. \n\n👋 Меня зовут Лиля, и я уже 9 лет живу и работаю в разных странах. За моими плечами рабочие контракты в странах Азии и Ближнего Востока. Со мной ты получишь доступ к необычным предложениям работы и поддержку на каждом этапе. \n\n⭐️ Почему выбирают меня? Я обеспечиваю надежность, прозрачность и индивидуальный подход к каждому кандидату. Путешествуй и зарабатывай больше, чем в своём городе!`
+        caption: `${user.first_name},\n\n${t('welcome.title', lang)}\n\n${t('welcome.description', lang)}`
       }
   );
   await bot.sendMessage(
       chatId,
-      `Какие следующие шаги?`
+      t('welcome.nextSteps', lang)
   );
   await bot.sendMessage(
       chatId,
-      `Шаг 1: Посмотри последние вакансии в моем канале...`
+      t('welcome.step1', lang)
   );
   await bot.sendMessage(
       chatId,
-      `Шаг 2: Посмотри вакансии по всему миру... Я паршу 5 сайтов. Инструмент. Теперь еге можешь использовать ты...`
+      t('welcome.step2', lang)
   );
   // await bot.sendMessage(
   //     chatId,
@@ -41,29 +43,29 @@ export async function handleStart(bot: TelegramBot, chatId: number, user: Telegr
   // );
   await bot.sendMessage(
       chatId,
-      `👉 PS: Подпишись на мои соцсети и будь в курсе всех новостей 🚨, актуальных горячих вакансий 🔥 и историй из путешествий! 🌏✈️`,
+      t('welcome.socialLinks', lang),
       {
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [
             [{
-              text: `Мой инстаграм`,
+              text: t('welcome.social.instagram', lang),
               url: 'https://www.instagram.com/lily.travelgirl/'
             }],
             [{
-              text: `Мой телеграм`,
+              text: t('welcome.social.telegram', lang),
               url: 'https://t.me/siberian_lily'
             }],
             [{
-              text: `Мои вакансии`,
+              text: t('welcome.social.jobs', lang),
               url: 'https://t.me/travelgig_jobs'
             }],
             [{
-              text: `Вакансии по всему миру`,
+              text: t('welcome.social.worldwide', lang),
               url: 'https://tracker.travelgig.info/'
             }],
             [{
-              text: `Мой сайт`,
+              text: t('welcome.social.website', lang),
               url: 'https://travelgig.info/'
             }]
           ]
@@ -72,19 +74,21 @@ export async function handleStart(bot: TelegramBot, chatId: number, user: Telegr
   );
 }
 
-export async function handleLogin(bot: TelegramBot, chatId: number, userId: string) {
+export async function handleLogin(bot: TelegramBot, chatId: number, user: TelegramUser) {
+  const userId = user.id.toString();
   logger.user('Processing /login command', userId);
-
+  const lang = user.language_code || 'ru';
   const authLink = await generateAuthLink(userId);
 
   logger.debug('Sending auth link', { chatId, userId });
   await bot.sendMessage(
       chatId,
-      `Вот ваша ссылка для входа:\n\n${authLink}`
+      t('auth.loginLink', lang, { link: authLink })
   );
 }
 
-export async function handlePayment(bot: TelegramBot, chatId: number) {
+export async function handlePayment(bot: TelegramBot, chatId: number, user: TelegramUser) {
+  const lang = user.language_code || 'ru';
   try {
     await createPaymentInvoice(bot, chatId);
   } catch (error) {

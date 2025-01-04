@@ -13,6 +13,7 @@ export function setupBotHandlers(bot: TelegramBot) {
 
     bot.onText(/\/login/, async (msg) => {
         logger.info('🔑 Received /login command', { userId: msg.from?.id });
+        // @ts-ignore
         await handleLogin(bot, msg.chat.id, msg.from!.id.toString());
     });
 
