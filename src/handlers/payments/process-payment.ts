@@ -4,15 +4,13 @@ import { logger } from '../../utils/logger';
 import { DatabaseError } from '../../utils/errors';
 
 export async function processPayment({ userId, payment }: Omit<PaymentSuccess, 'chatId'>) {
+    logger.info('Processing successful payment',{
+        userId,
+        payment
+    });
     const amount = payment.total_amount; // Convert from cents
 
     try {
-        logger.payment('Processing successful payment', userId, {
-            amount,
-            currency: payment.currency,
-            chargeId: payment.provider_payment_charge_id
-        });
-
         // Update user balance
         await updateUserBalance(userId, amount);
 

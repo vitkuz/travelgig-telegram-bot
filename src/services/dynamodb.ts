@@ -44,7 +44,12 @@ export async function recordAuthToken(userId: string, secret: string, ttl: numbe
 }
 
 export async function updateUserBalance(userId: string, amount: number) {
-  logger.debug('Updating user balance', { userId, amount });
+  logger.info('Updating user balance', { userId, amount });
+
+  if (typeof amount !== 'number' || amount <= 0) {
+    throw new Error('Invalid amount value');
+  }
+
   await docClient.send(new UpdateCommand({
     TableName: config.tables.users,
     Key: { userId },

@@ -5,11 +5,11 @@ import {config} from "../../config/index";
 
 export async function createPaymentInvoice(bot: TelegramBot, chatId: number) {
     try {
-        const title = 'Add Balance';
-        const description = 'Add funds to your account';
+        const title = 'Пополнить баланс';
+        const description = 'Добавить звезд на баланс';
         const payload = `payment_${Date.now()}`;
         const currency = 'XTR';
-        const prices = [{ label: 'Balance', amount: 1 }]; // 1 star
+        const prices = [{ label: 'Баланс', amount: 1 }]; // 1 star
 
         logger.debug('Creating payment invoice', {
             chatId,

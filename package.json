@@ -6,6 +6,8 @@
     "cdk": "cdk",
     "deploy": "cdk deploy",
     "setup-webhook": "ts-node scripts/setup-webhook.ts",
+    "update-commands": "ts-node scripts/update-commands.ts",
+    "set-initial-message": "ts-node scripts/set-initial-message.ts",
     "create-layer": "ts-node scripts/create-layer.ts",
     "update-secret": "ts-node scripts/update-secret.ts",
     "dev": "ts-node src/local/local.ts",

@@ -10,10 +10,10 @@ export async function handleSuccessfulPayment(
     userId: string,
     payment: PaymentDetails
 ) {
+    console.log('handleSuccessfulPayment')
     try {
         const amount = await processPayment({ userId, payment });
-
-        logger.debug('Sending success message', { chatId, userId });
+        logger.info('Sending success message', { chatId, userId });
         await bot.sendMessage(
             chatId,
             `✅ Payment successful! Added $${amount} to your balance.`

@@ -10,7 +10,7 @@ export async function handleBalance(bot: TelegramBot, chatId: number, userId: st
         logger.debug('Sending balance message', { chatId, userId, balance });
         await bot.sendMessage(
             chatId,
-            `💰 ${firstName}, your current balance is $${balance.toFixed(2)}`
+            `💰 ${firstName}, ваш текущий баланс ⭐${balance.toFixed(2)}`
         );
     } catch (error) {
         if (error instanceof DatabaseError) {

@@ -60,6 +60,7 @@ export class TelegramBotStack extends cdk.Stack {
         USERS_AUTH_TABLE: usersAuthTable.tableName,
         PAYMENT_HISTORY_TABLE: paymentHistoryTable.tableName,
         BOT_TOKEN: botToken.secretValue.unsafeUnwrap(), //todo: you can remove secret, and put it from .env
+        FRONT_URL: 'https://tracker.travelgig.info/'
       },
     });
 
@@ -99,7 +100,7 @@ export class TelegramBotStack extends cdk.Stack {
         USERS_AUTH_TABLE: usersAuthTable.tableName,
         PAYMENT_HISTORY_TABLE: paymentHistoryTable.tableName,
         BOT_TOKEN: botToken.secretValue.unsafeUnwrap(), //todo: you can remove secret, and put it from .env
-        FRONT_URL: 'https://d1vcyqhvw55pzm.cloudfront.net/', //todo: you can remove secret, and put it from .env
+        FRONT_URL: 'https://tracker.travelgig.info/', //todo: you can remove secret, and put it from .env
       },
     });
 
@@ -118,6 +119,7 @@ export class TelegramBotStack extends cdk.Stack {
         USERS_AUTH_TABLE: usersAuthTable.tableName,
         PAYMENT_HISTORY_TABLE: paymentHistoryTable.tableName,
         BOT_TOKEN: botToken.secretValue.unsafeUnwrap(), //todo: you can remove secret, and put it from .env
+        FRONT_URL: 'https://tracker.travelgig.info/'
       },
     });
 
@@ -135,6 +137,7 @@ export class TelegramBotStack extends cdk.Stack {
         USERS_AUTH_TABLE: usersAuthTable.tableName,
         PAYMENT_HISTORY_TABLE: paymentHistoryTable.tableName,
         BOT_TOKEN: botToken.secretValue.unsafeUnwrap(), //todo: you can remove secret, and put it from .env
+        FRONT_URL: 'https://tracker.travelgig.info/'
       },
     });
 

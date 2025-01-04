@@ -9,8 +9,9 @@ const bot = new TelegramBot(config.botToken);
 export const handler = async (event: any) => {
   try {
     const body = JSON.parse(event.body);
-
+    console.log('event:body',JSON.stringify(body, null, 2));
     if (body.message) {
+      console.log('if:body.message',JSON.stringify(body, null, 2));
       const chatId = body.message.chat.id;
       const text = body.message.text;
       const user = body.message.from;
@@ -22,7 +23,7 @@ export const handler = async (event: any) => {
       });
 
       // Check if the text starts with a slash
-      if (text.startsWith('/')) {
+      if (text && text.startsWith('/')) {
         const [command, payload] = text.split(' ', 2); // Split into command and optional payload
         console.log({ command, payload });
 
@@ -52,19 +53,22 @@ export const handler = async (event: any) => {
             await bot.sendMessage(chatId, `Unknown command: ${command}`);
             break;
         }
+      } else if (body.message.successful_payment) {
+        console.log('if:body.message.successful_payment')
+
+        await handleSuccessfulPayment(
+            bot,
+            body.message.chat.id,
+            body.message.from.id.toString(),
+            body.message.successful_payment
+        );
       } else {
         // Default handler for non-command text
         await bot.sendMessage(chatId, 'Sorry, I don’t understand that message.');
       }
     } else if (body.pre_checkout_query) {
+      console.log('if:body.pre_checkout_query',JSON.stringify(body, null, 2));
       await bot.answerPreCheckoutQuery(body.pre_checkout_query.id, true);
-    } else if (body.successful_payment) {
-      await handleSuccessfulPayment(
-          bot,
-          body.message.chat.id,
-          body.message.from.id.toString(),
-          body.successful_payment
-      );
     }
 
     return {
