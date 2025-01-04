@@ -1,4 +1,4 @@
-import { PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import {PutCommand, UpdateCommand, UpdateCommandInput} from '@aws-sdk/lib-dynamodb';
 import { config } from '../config';
 import { createDynamoDBClient } from '../config/dynamodb';
 import { logger } from '../utils/logger';
@@ -16,18 +16,43 @@ type TelegramUser = {
 export async function recordUser(user: TelegramUser) {
   logger.debug('Recording user', user);
 
-  await docClient.send(new PutCommand({
+  const params: UpdateCommandInput = {
     TableName: config.tables.users,
-    Item: {
+    Key: {
       userId: user.id.toString(),
-      firstName: user.first_name,
-      lastName: user.last_name,
-      username: user.username,
-      languageCode: user.language_code,
-      balance: 0,
-      createdAt: new Date().toISOString(),
     },
-  }));
+    UpdateExpression: `
+      SET firstName = :firstName,
+          lastName = :lastName,
+          username = :username,
+          languageCode = :languageCode,
+          createdAt = if_not_exists(createdAt, :createdAt),
+          updatedAt = :updatedAt,
+          balance = if_not_exists(balance, :initialBalance)
+    `,
+    ExpressionAttributeValues: {
+      ':firstName': user.first_name,
+      ':lastName': user.last_name,
+      ':username': user.username,
+      ':languageCode': user.language_code,
+      ':createdAt': new Date().toISOString(),
+      ':updatedAt': new Date().toISOString(),
+      ':initialBalance': 0, // Default balance when the user is created
+    },
+  };
+
+  try {
+    await docClient.send(new UpdateCommand(params));
+    logger.info(`User ${user.id} recorded successfully.`);
+  } catch (error) {
+    if (error instanceof Error) {
+      logger.error(`Error recording user: ${error.message}`);
+      logger.debug(`Stack trace: ${error.stack}`);
+    } else {
+      logger.error('Unexpected error');
+    }
+    throw error;
+  }
 }
 
 export async function recordAuthToken(userId: string, secret: string, ttl: number) {
