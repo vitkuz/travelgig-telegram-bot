@@ -57,11 +57,11 @@ export const handler = async (event: any) => {
         }
       } else if (body.message.successful_payment) {
         console.log('if:body.message.successful_payment')
-
+        const user = body.message.from;
         await handleSuccessfulPayment(
             bot,
             body.message.chat.id,
-            body.message.from.id.toString(),
+            user,
             body.message.successful_payment
         );
       } else {

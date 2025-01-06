@@ -7,11 +7,11 @@ config();
 const descriptions = [
     {
         language_code: 'ru', // Russian
-        description: "💼 Travelgig Jobs Bot – ваш помощник в поиске работы в Азии! 🌏\n\n✨ Бот 4 раза в день сканирует 5 сайтов и отправляет подходящие вакансии прямо в Telegram.\n\n💲 **Всего $1**. Платите только за совпадения, первый бюджет – бесплатно.\n\n👉 Настройте фильтры и начните получать вакансии уже сегодня!"
+        description: "💼 Travelgig Jobs Bot сканирует 5 популярных сайтов с вакансиями 4 раза в день и отправляет подходящие вакансии в Telegram.\n\n 💲 Платите только за совпадения, стартовый бюджет – 10 звёзд Telegram.\n\n 👉 Настройте фильтры и начните получать предложения уже сегодня!\n"
     },
     {
         language_code: 'en', // English
-        description: "💼 Travelgig Jobs Bot – your assistant for finding jobs in Asia! 🌏\n\n✨ The bot scans 5 sites 4 times a day and sends matching jobs directly to Telegram.\n\n💲 **Just $1 per month**. Only pay for matches, with a free starting budget.\n\n👉 Set your filters and start getting jobs today!"
+        description: "💼 Travelgig Jobs Bot – scans 5 popular job board websites 4 times a day and sends matching jobs directly to Telegram.\n\n💲 Only pay for matches, starting budget is 10 telegram stars to test things out.\n\n👉 Set your filters and start getting jobs opportunities today! Save time and be up to day with your industry"
     }
 ];
 

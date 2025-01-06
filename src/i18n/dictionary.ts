@@ -2,25 +2,22 @@ export const dictionary = {
     en: {
         welcome: {
             message0: 'Welcome to the bot!',
-            message1: 'The bot scans 5 popular job websites 4 times a day and sends fresh, relevant offers directly to you on Telegram.',
+            message1: 'The bot scans 5 popular job websites 4 times a day and sends fresh, relevant offers directly to your Telegram.',
             message2: 'Now go to the website (use the link above), create filters, and enable notifications.',
-            message3: 'The bot will send relevant job offers directly to you on Telegram.',
-            message4: 'Top up your balance and pay only for matches. 1 Telegram star ($0.016) per match.',
-            message5: 'You have a starting balance of 10 stars so you can try everything out.',
+            message3: 'The bot will send relevant job offers directly to your Telegram based on the filters you created.',
+            message4: 'You pay 1 Telegram star ($0.016) for each match (notification). No matches — no payment.',
+            message5: 'You have a starting balance of 10 stars to test everything.',
             message6: 'Questions or suggestions? Contact @siberian_lily',
         },
         about: {
-            title: "💰Want to work abroad? You're in the right place! There's a unique opportunity for employment worldwide!",
-            description: "🌏 This bot will allow you to see a list of current vacancies.\n\n👋 My name is Lily, and I've been living and working in different countries for 9 years. I have work contracts in Asia and the Middle East under my belt. With me, you'll get access to unusual job offers and support at every stage.\n\n⭐️ Why choose me? I provide reliability, transparency, and an individual approach to each candidate. Travel and earn more than in your city!",
-            nextSteps: "What are the next steps?",
-            step1: "Step 1: Check out the latest vacancies in my channel...",
-            step2: "Step 2: Look at vacancies worldwide... I parse 5 sites. Now you can use this tool...",
-            socialLinks: "👉 PS: Follow my social networks and stay updated with all the news 🚨, current hot vacancies 🔥 and travel stories! 🌏✈️",
+            about0: "👋 My name is Lilia, and I’ve been living and working in different countries for 9 years. I have experience working under contracts in Asia and the Middle East. With my help, you’ll gain access to unique job opportunities and receive support every step of the way.\n\n⭐️ Why choose me? I guarantee reliability, transparency, and a personalized approach to every candidate. Travel and earn more than in your hometown!",
+            about1: "I am an independent recruiter helping people find jobs in Asia, leave depressive and cold regions of Russia, and start earning in dollars.\n\n If someone successfully relocates through me and completes their probation period, I receive a reward for filling the position.\n\n To simplify the process of finding new opportunities for more people, I’ve created a Telegram bot that automatically scans the 5 most popular job websites, finds new offers, checks them against personalized filters set for each user, and sends notifications if a match is found.\n\n This bot is now available to everyone.\n\n Use this bot for automatic job searches and find your ideal position in Asia. Save time and stay updated with the latest opportunities!",
+            about2: "👉 Follow me on social media to stay updated on all the news 🚨, hot job openings 🔥, and travel stories! 🌏✈️",
             social: {
                 instagram: "My Instagram",
                 telegram: "My Telegram",
                 jobs: "My Jobs",
-                worldwide: "Worldwide Jobs",
+                worldwide: "Latest Jobs in Asia",
                 website: "My Website"
             }
         },
@@ -32,8 +29,8 @@ export const dictionary = {
             loginLink: "Here's your login link:\n\n{link}"
         },
         payment: {
-            title: "Add Balance",
-            description: "Add ⭐ stars to balance",
+            title: "Top Up Balance",
+            description: "Add 1 ⭐ star ($0.016) to balance",
             error: "❌ Sorry, there was an error creating the payment. Please try again later.",
             success: "✅ Payment successful! Added ⭐{amount} to your balance.",
             updateError: "❌ Payment received but failed to update balance. Our team will resolve this issue."
@@ -45,26 +42,23 @@ export const dictionary = {
     },
     ru: {
         welcome: {
-            message0: 'добро пожаловать в бот!',
-            message1: 'Бот 4 раза в день сканирует 5 популярных сайтов с вакансиями и отправляет свежие подходящие предложения прямо вам в Telegram.',
+            message0: 'Добро пожаловать в бот!',
+            message1: 'Бот сканирует 5 популярных сайтов с вакансиями 4 раза в день и отправляет свежие, подходящие предложения прямо вам в Telegram.',
             message2: 'Теперь перейдите на сайт (используйте ссылку выше), создайте фильтры и включите уведомления.',
-            message3: 'Бот будет отправлять подходящие вакансии прямо вам в Telegram.',
-            message4: 'Пополните баланс и платите только за совпадения. 1 Telegram звезда ($0.016) за каждое совпадение.',
-            message5: 'У вас есть стартовый баланс из 10 звезд, чтобы вы могли все попробовать.',
-            message6: 'Есть вопросы или предложения? Пишите @siberian_lily',
+            message3: 'Бот будет отправлять подходящие вакансии на основе созданных вами фильтров прямо в Telegram.',
+            message4: 'Вы платите 1 Telegram звезду ($0.016) за каждое совпадение (уведомление). Нет совпадений — нет оплаты.',
+            message5: 'У вас есть стартовый баланс в 10 звёзд, чтобы вы могли всё протестировать.',
+            message6: 'Вопросы или предложения? Свяжитесь с @siberian_lily',
         },
         about: {
-            title: "💰Хочешь работать за границей? Ты в правильном месте! Есть уникальная возможность трудоустройства по всему миру!",
-            description: "🌏 Этот бот позволит тебе увидеть список актуальных вакансий.\n\n👋 Меня зовут Лиля, и я уже 9 лет живу и работаю в разных странах. За моими плечами рабочие контракты в странах Азии и Ближнего Востока. Со мной ты получишь доступ к необычным предложениям работы и поддержку на каждом этапе.\n\n⭐️ Почему выбирают меня? Я обеспечиваю надежность, прозрачность и индивидуальный подход к каждому кандидату. Путешествуй и зарабатывай больше, чем в своём городе!",
-            nextSteps: "Какие следующие шаги?",
-            step1: "Шаг 1: Посмотри последние вакансии в моем канале...",
-            step2: "Шаг 2: Посмотри вакансии по всему миру... Я паршу 5 сайтов. Теперь ты можешь использовать этот инструмент...",
-            socialLinks: "👉 PS: Подпишись на мои соцсети и будь в курсе всех новостей 🚨, актуальных горячих вакансий 🔥 и историй из путешествий! 🌏✈️",
+            about0: "👋 Меня зовут Лиля, и я уже 9 лет живу и работаю в разных странах. У меня есть опыт работы по контрактам в Азии и на Ближнем Востоке. С помощью меня вы получите доступ к уникальным вакансиям и поддержку на каждом этапе.\n\n⭐️ Почему выбрать меня? Я гарантирую надежность, прозрачность и индивидуальный подход к каждому кандидату. Путешествуйте и зарабатывайте больше, чем в вашем городе!",
+            about1: "Я независимый рекрутер и помогаю людям найти работу в Азии, уехать из депрессивных и холодных регионов России и начать зарабатывать в долларах.\n\n Если человек уехал благодаря мне и успешно прошел испытательный срок, я получаю вознаграждение за закрытую вакансию.\n\n Чтобы упростить процесс поиска новых возможностей для большего количества людей, я создала Telegram-бота, который автоматически сканирует 5 самых популярных сайтов с вакансиями, находит новые предложения, проверяет их на совпадения с настроенными фильтрами для каждого человека и отправляет уведомления, если совпадение найдено. \n\n Теперь этот бот доступен каждому. \n\n Используй этого бота для автоматического поиска идеального места работы в Азии. Экономь время и держи руку на пульсе",
+            about2: "👉 Подписывайтесь на меня в социальных сетях и будьте в курсе всех новостей 🚨, горячих вакансий 🔥 и историй о путешествиях! 🌏✈️",
             social: {
-                instagram: "Мой инстаграм",
-                telegram: "Мой телеграм",
+                instagram: "Мой Instagram",
+                telegram: "Мой Telegram",
                 jobs: "Мои вакансии",
-                worldwide: "Вакансии по всему миру",
+                worldwide: "Свежие вакансии в Азии",
                 website: "Мой сайт"
             }
         },
@@ -77,7 +71,7 @@ export const dictionary = {
         },
         payment: {
             title: "Пополнить баланс",
-            description: "Добавить ⭐ звезд на баланс",
+            description: "Добавить 1 ⭐ звезду ($0.016) на баланс",
             error: "❌ Извините, произошла ошибка при создании платежа. Пожалуйста, попробуйте позже.",
             success: "✅ Платеж успешен! Добавлено ⭐{amount} на ваш баланс.",
             updateError: "❌ Платеж получен, но не удалось обновить баланс. Наша команда решит эту проблему."

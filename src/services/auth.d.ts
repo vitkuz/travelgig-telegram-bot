@@ -1,1 +1,1 @@
-export declare function generateAuthLink(userId: string): Promise<string>;
+export declare function generateAuthLink(userId: string, lang?: string): Promise<string>;

@@ -26,7 +26,7 @@ export async function handleStart(bot: TelegramBot, chatId: number, user: Telegr
       chatId,
       'https://videos-582347504313.s3.amazonaws.com/bb3c5120-c598-448f-912a-eb0502517df9.jfif',
       {
-        caption: `${user.first_name}, \n\n${t('welcome.message0', lang)}`
+        caption: `${user.first_name}, ${t('welcome.message0', lang)}`
       }
   );
   await bot.sendMessage(
@@ -109,28 +109,16 @@ export async function handleAbout(bot: TelegramBot, chatId: number, user: Telegr
       chatId,
       'https://videos-582347504313.s3.amazonaws.com/bb3c5120-c598-448f-912a-eb0502517df9.jfif',
       {
-        caption: `${user.first_name},\n\n${t('about.title', lang)}\n\n${t('about.description', lang)}`
+        caption: `${user.first_name},\n\n${t('about.about0', lang)}`
       }
   );
   await bot.sendMessage(
       chatId,
-      t('about.nextSteps', lang)
+      t('about.about1', lang)
   );
   await bot.sendMessage(
       chatId,
-      t('about.step1', lang)
-  );
-  await bot.sendMessage(
-      chatId,
-      t('about.step2', lang)
-  );
-  // await bot.sendMessage(
-  //     chatId,
-  //     `PS: Вопросы... пиши лично @vitkuzzzs. только детально пиши. ниче сразу добавлю в игнор`
-  // );
-  await bot.sendMessage(
-      chatId,
-      t('about.socialLinks', lang),
+      t('about.about2', lang),
       {
         parse_mode: 'HTML',
         reply_markup: {
@@ -165,7 +153,7 @@ export async function handleLogin(bot: TelegramBot, chatId: number, user: Telegr
   const userId = user.id.toString();
   logger.user('Processing /login command', userId);
   const lang = user.language_code || 'ru';
-  const authLink = await generateAuthLink(userId);
+  const authLink = await generateAuthLink(userId, lang);
 
   logger.debug('Sending auth link', { chatId, userId });
   await bot.sendMessage(
