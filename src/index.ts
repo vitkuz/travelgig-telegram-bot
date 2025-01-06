@@ -3,6 +3,7 @@ import { config } from './config';
 import { handleStart, handleLogin, handlePayment } from './handlers/commands';
 import { handleSuccessfulPayment } from './handlers/payments';
 import {handleBalance} from "./handlers/balance";
+import {t} from "./i18n/translate";
 
 const bot = new TelegramBot(config.botToken);
 
@@ -47,10 +48,8 @@ export const handler = async (event: any) => {
           case '/mybalance':
             await handleBalance(bot, chatId, user);
             break;
-
           default:
-            // Handle unknown commands
-            await bot.sendMessage(chatId, `Unknown command: ${command}`);
+            await bot.sendMessage(chatId, t('errors.unknownCommand', user.language_code || 'ru', { command }));
             break;
         }
       } else if (body.message.successful_payment) {
@@ -64,7 +63,7 @@ export const handler = async (event: any) => {
         );
       } else {
         // Default handler for non-command text
-        await bot.sendMessage(chatId, 'Sorry, I don’t understand that message.');
+        await bot.sendMessage(chatId, t('errors.unknownMessage', user.language_code || 'ru'));
       }
     } else if (body.pre_checkout_query) {
       console.log('if:body.pre_checkout_query',JSON.stringify(body, null, 2));

@@ -14,12 +14,12 @@ export function setupBotHandlers(bot: TelegramBot) {
     bot.onText(/\/login/, async (msg) => {
         logger.info('🔑 Received /login command', { userId: msg.from?.id });
         // @ts-ignore
-        await handleLogin(bot, msg.chat.id, msg.from!.id.toString());
+        await handleLogin(bot, msg.chat.id, msg.from);
     });
 
     bot.onText(/\/payment/, async (msg) => {
         logger.info('💰 Received /payment command', { userId: msg.from?.id });
-        await handlePayment(bot, msg.chat.id);
+        await handlePayment(bot, msg.chat.id, msg.from!);
     });
 
     // Payment handlers
@@ -30,7 +30,8 @@ export function setupBotHandlers(bot: TelegramBot) {
 
     bot.onText(/\/mybalance/, async (msg) => {
         logger.info('💳 Received /mybalance command', { userId: msg.from?.id });
-        await handleBalance(bot, msg.chat.id, msg.from!.id.toString());
+        // @ts-ignore
+        await handleBalance(bot, msg.chat.id, msg.from!);
     });
 
     bot.on('successful_payment', async (msg) => {

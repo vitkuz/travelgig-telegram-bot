@@ -95,7 +95,7 @@ export async function handlePayment(bot: TelegramBot, chatId: number, user: Tele
     if (error instanceof PaymentError) {
       await bot.sendMessage(
           chatId,
-          '❌ Sorry, there was an error creating the payment. Please try again later.'
+          t('payment.error', lang)
       );
     }
     throw error; // Re-throw for logging/monitoring
