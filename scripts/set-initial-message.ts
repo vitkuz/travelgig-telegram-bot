@@ -4,6 +4,17 @@ import { logger } from '../src/utils/logger';
 
 config();
 
+const descriptions = [
+    {
+        language_code: 'ru', // Russian
+        description: "💼 Travelgig Jobs Bot – ваш помощник в поиске работы в Азии! 🌏\n\n✨ Бот 4 раза в день сканирует 5 сайтов и отправляет подходящие вакансии прямо в Telegram.\n\n💲 **Всего $1**. Платите только за совпадения, первый бюджет – бесплатно.\n\n👉 Настройте фильтры и начните получать вакансии уже сегодня!"
+    },
+    {
+        language_code: 'en', // English
+        description: "💼 Travelgig Jobs Bot – your assistant for finding jobs in Asia! 🌏\n\n✨ The bot scans 5 sites 4 times a day and sends matching jobs directly to Telegram.\n\n💲 **Just $1 per month**. Only pay for matches, with a free starting budget.\n\n👉 Set your filters and start getting jobs today!"
+    }
+];
+
 async function setInitialBotMessage() {
     const token = process.env.BOT_TOKEN;
 
@@ -12,17 +23,20 @@ async function setInitialBotMessage() {
     }
 
     try {
-        const response = await axios.post(
-            `https://api.telegram.org/bot${token}/setMyDescription`,
-            {
-                description: "💰Хочешь работать за границей? Ты в правильном месте! Есть уникальная возможность трудоустройства по всему миру!🌏\n\n👋 Меня зовут Лиля и я 9 лет живу и работаю в разных странах. За моими плечами рабочие контракты в странах Азии и Среднего Востока.\n\nНажми /start чтобы начать!"
-            }
-        );
+        for (const { language_code, description } of descriptions) {
+            const response = await axios.post(
+                `https://api.telegram.org/bot${token}/setMyDescription`,
+                {
+                    description,
+                    language_code
+                }
+            );
 
-        if (response.data.ok) {
-            logger.info('Bot initial message set successfully');
-        } else {
-            throw new Error('Failed to set bot initial message');
+            if (response.data.ok) {
+                logger.info(`Initial message set successfully for language: ${language_code}`);
+            } else {
+                throw new Error(`Failed to set initial message for language: ${language_code}`);
+            }
         }
     } catch (error) {
         logger.error('Error setting bot initial message:', error as Error);

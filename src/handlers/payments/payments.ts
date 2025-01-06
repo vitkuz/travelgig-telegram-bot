@@ -4,10 +4,10 @@ import {PaymentError} from "../../utils/errors";
 import {config} from "../../config/index";
 import { t } from '../../i18n/translate';
 
-export async function createPaymentInvoice(bot: TelegramBot, chatId: number) {
+export async function createPaymentInvoice(bot: TelegramBot, chatId: number, lang: string = 'en') {
     try {
-        const title = t('payment.title', 'ru');
-        const description = t('payment.description', 'ru');
+        const title = t('payment.title', lang);
+        const description = t('payment.description', lang);
         const payload = `payment_${Date.now()}`;
         const currency = 'XTR';
         const prices = [{ label: 'Баланс', amount: 1 }]; // 1 star

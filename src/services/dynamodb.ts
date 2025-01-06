@@ -37,7 +37,7 @@ export async function recordUser(user: TelegramUser) {
       ':languageCode': user.language_code,
       ':createdAt': new Date().toISOString(),
       ':updatedAt': new Date().toISOString(),
-      ':initialBalance': 0, // Default balance when the user is created
+      ':initialBalance': 10,
     },
   };
 

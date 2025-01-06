@@ -1,6 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { config } from './config';
-import { handleStart, handleLogin, handlePayment } from './handlers/commands';
+import {handleStart, handleLogin, handlePayment, handleAbout} from './handlers/commands';
 import { handleSuccessfulPayment } from './handlers/payments';
 import {handleBalance} from "./handlers/balance";
 import {t} from "./i18n/translate";
@@ -35,6 +35,9 @@ export const handler = async (event: any) => {
             } else {
               await handleStart(bot, chatId, user);
             }
+            break;
+          case '/about':
+            await handleAbout(bot, chatId, user);
             break;
 
           case '/login':
