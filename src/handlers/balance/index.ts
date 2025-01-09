@@ -14,7 +14,7 @@ export async function handleBalance(bot: TelegramBot, chatId: number, user: Tele
         logger.debug('Sending balance message', { chatId, userId, balance });
         await bot.sendMessage(
             chatId,
-            t('balance.current', lang, { firstName, balance: balance.toFixed(2) })
+            t('balance.current', lang, { firstName, balance })
         );
     } catch (error) {
         if (error instanceof DatabaseError) {

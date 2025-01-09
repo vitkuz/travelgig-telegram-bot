@@ -8,6 +8,8 @@
     "setup-webhook": "ts-node scripts/setup-webhook.ts",
     "update-commands": "ts-node scripts/update-commands.ts",
     "set-initial-message": "ts-node scripts/set-initial-message.ts",
+    "upload-bot-photo": "ts-node scripts/upload-bot-photo.ts",
+    "set-bot-description": "ts-node scripts/set-bot-description.ts",
     "create-layer": "ts-node scripts/create-layer.ts",
     "update-secret": "ts-node scripts/update-secret.ts",
     "dev": "ts-node src/local/local.ts",

@@ -7,11 +7,22 @@ config();
 const descriptions = [
     {
         language_code: 'ru', // Russian
-        description: "💼 Travelgig Jobs Bot сканирует 5 популярных сайтов с вакансиями 4 раза в день и отправляет подходящие вакансии в Telegram.\n\n 💲 Платите только за совпадения, стартовый бюджет – 10 звёзд Telegram.\n\n 👉 Настройте фильтры и начните получать предложения уже сегодня!\n"
+        description: `💼 Бот сканирует самые популярные сайты с вакансиями и отправляет подходящие вакансии в Telegram.\n\n💲 Вы получите 10 телеграм звезд. Используйте стартовый бюджет, чтобы протестировать бот.\n\n👉 Настройте фильтры и начните получать предложения уже сегодня! Бот будет отправлять подходящие вакансии прямо в ваш Telegram на основе созданных вами фильтров.\n\n⏳ Экономьте время и держите руку на пульсе`
     },
     {
         language_code: 'en', // English
-        description: "💼 Travelgig Jobs Bot – scans 5 popular job board websites 4 times a day and sends matching jobs directly to Telegram.\n\n💲 Only pay for matches, starting budget is 10 telegram stars to test things out.\n\n👉 Set your filters and start getting jobs opportunities today! Save time and be up to day with your industry"
+        description: `💼 The bot scans the most popular job websites and sends suitable job offers to Telegram.\n\n💲 You will receive 10 Telegram stars. Use the starting budget to test the bot.\n\n👉 Set up filters and start receiving offers today! The bot will send relevant job offers directly to your Telegram based on the filters you created.\n\n⏳ Save time and stay on top of opportunities.`
+    }
+];
+
+const names = [
+    {
+        language_code: 'ru', // Russian
+        name: "Travelgig Вакансии Бот | Работа за границей | Рaбота в Азии"
+    },
+    {
+        language_code: 'en', // English
+        name: "Travelgig Jobs Bot | Work Abroad | Work in Asia and Middle East"
     }
 ];
 
@@ -38,7 +49,27 @@ async function setInitialBotMessage() {
                 throw new Error(`Failed to set initial message for language: ${language_code}`);
             }
         }
+
+
+        // Set names
+        for (const { language_code, name } of names) {
+            const response = await axios.post(
+                `https://api.telegram.org/bot${token}/setMyName`,
+                {
+                    name,
+                    language_code
+                }
+            );
+
+            if (response.data.ok) {
+                logger.info(`Name set successfully for language: ${language_code}`);
+            } else {
+                throw new Error(`Failed to set name for language: ${language_code}`);
+            }
+        }
+
     } catch (error) {
+        console.log(error)
         logger.error('Error setting bot initial message:', error as Error);
         process.exit(1);
     }

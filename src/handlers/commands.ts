@@ -118,7 +118,11 @@ export async function handleAbout(bot: TelegramBot, chatId: number, user: Telegr
   );
   await bot.sendMessage(
       chatId,
-      t('about.about2', lang),
+      t('about.about2', lang)
+  );
+  await bot.sendMessage(
+      chatId,
+      t('about.about3', lang),
       {
         parse_mode: 'HTML',
         reply_markup: {
